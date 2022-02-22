@@ -53,18 +53,6 @@
     }
   },
   "lint-staged": {
-    "src": [
-      "**/*.{js,jsx,ts,tsx}",
-      "!**/node_modules/**"
-    ],
-    "options": {
-      "ignore": [
-        "**/node_modules/**",
-        "**/dist/**"
-      ],
-      "linters": [
-        "prettier --write"
-      ]
-    }
+    "*.{js,css,md,json,ts,tsx}": "prettier --write"
   }
 }
