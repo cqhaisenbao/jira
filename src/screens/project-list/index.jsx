@@ -1,3 +1,4 @@
+import qs from "qs";
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
@@ -13,7 +14,7 @@ const ProjectListScreen = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    Axios("/projects").then((res) => {
+    Axios(`/projects?${qs.stringify(cleanObject(param))}`).then((res) => {
       setList(res.data);
     });
   }, [param]);
