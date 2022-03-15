@@ -1,27 +1,31 @@
-import { SearchPanel } from "./search-panel";
-import { List } from "./list";
-import { useEffect, useState } from "react";
+import {SearchPanel} from "./search-panel";
+import {List} from "./list";
+import {useEffect, useState} from 'react';
 
-export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  const [list, setList] = useState([]);
+const apiUrl = process.env.REACT_APP_API_URL;
 
-  useEffect(() => {
-    fetch("").then(async (res) => {
-      if (res.ok) {
-        const data = await res.json();
-        setList(data);
-      }
+const ProjectListScreen = () => {
+    const [param, setParam] = useState({
+        name: "",
+        personId: "",
     });
-  }, [param]);
+    const [list, setList] = useState([]);
 
-  return (
-    <div>
-      <SearchPanel param={param} setParam={setParam} />
-      <List list={list} />
-    </div>
-  );
+    useEffect(() => {
+        fetch(`${apiUrl}/projects`).then(async (res) => {
+            if (res.ok) {
+                const data = await res.json();
+                setList(data);
+            }
+        });
+    }, [param]);
+
+    return (
+        <div>
+            <SearchPanel param={param} setParam={setParam}/>
+            <List list={list}/>
+        </div>
+    );
 };
+
+export default ProjectListScreen;
