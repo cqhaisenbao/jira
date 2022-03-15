@@ -7,27 +7,23 @@ import { useMount } from "ahooks";
 import useDebounce from "../../hooks/useDebounce";
 
 const ProjectListScreen = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
-  const [param, setParam] = useState({
+  const [param, setParam] = useState<SearchParam>({
     name: "",
     personId: "",
   });
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Project[]>([]);
 
   const debounceValue = useDebounce(param, 1000);
 
   useEffect(() => {
-    Axios(`/projects?${qs.stringify(cleanObject(param))}`).then((res) => {
-      setList(res.data);
-    });
+    Axios<Project[]>(`/projects?${qs.stringify(cleanObject(param))}`).then(
+      (res) => setList(res)
+    );
   }, [debounceValue]);
 
-  useMount(() => {
-    Axios("/users").then((res) => {
-      setUsers(res.data);
-    });
-  });
+  useMount(() => Axios<User[]>("/users").then((res) => setUsers(res)));
 
   return (
     <div>
