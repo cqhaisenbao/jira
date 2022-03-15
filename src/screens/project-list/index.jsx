@@ -1,7 +1,7 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import axios from "../../axios";
+import { Axios, cleanObject } from "../../utils";
 
 const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
@@ -13,13 +13,13 @@ const ProjectListScreen = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    axios("/projects").then((res) => {
+    Axios("/projects").then((res) => {
       setList(res.data);
     });
   }, [param]);
 
   useEffect(() => {
-    axios("/users").then((res) => {
+    Axios("/users").then((res) => {
       setUsers(res.data);
     });
   }, []);
