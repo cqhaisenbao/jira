@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export const SearchPanel = ({ param, setParam, users }) => {
   return (
     <form action="">
