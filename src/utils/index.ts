@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const cleanObject = (obj: any) => {
   const newObj = {} as any;
@@ -14,7 +14,8 @@ type RequestMethod = "get" | "post" | "put" | "delete" | "patch";
 
 export const Axios = async <T>(
   url: string,
-  method: RequestMethod = "get"
+  method: RequestMethod = "get",
+  config?: any
 ): Promise<T> => {
   const instance = axios.create({
     baseURL: "http://localhost:3001",
@@ -22,6 +23,8 @@ export const Axios = async <T>(
     headers: { "content-type": "application/json" },
   });
 
-  const { data } = await instance[method](url);
+  const { data } = await instance[method](url, {
+    ...config,
+  });
   return data as T;
 };
