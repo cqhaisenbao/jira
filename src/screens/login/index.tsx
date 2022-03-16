@@ -4,9 +4,16 @@ import { Axios } from "../../utils";
 const Login = () => {
   const handleSubmit = async (values: FormEvent<HTMLFormElement>) => {
     values.preventDefault();
-    const res = await Axios("/login", "post", {
+    const params = {
       username: (values.currentTarget.elements[0] as HTMLInputElement).value,
       password: (values.currentTarget.elements[1] as HTMLInputElement).value,
+    };
+    const res = await fetch("http://localhost:3001/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(params),
     });
     console.log(res);
   };
@@ -21,7 +28,7 @@ const Login = () => {
         <label htmlFor="password">密码</label>
         <input type="password" id={"password"} />
       </div>
-      <button type="submit">登录</button>
+      <button type="submit">注册</button>
     </form>
   );
 };

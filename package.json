@@ -12,6 +12,8 @@
     "@types/react-dom": "^17.0.11",
     "ahooks": "^3.1.13",
     "axios": "^0.26.1",
+    "imooc-jira-tool": "^1.0.3",
+    "jira-dev-tool": "^1.7.61",
     "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,7 +26,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-server": "json-server __json-server_mock__/db.json --middlewares ./__json-server_mock__/middleware.js --watch --port 3001",
     "prepare": "husky install"
   },
   "eslintConfig": {
