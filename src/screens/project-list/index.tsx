@@ -18,9 +18,9 @@ const ProjectListScreen = () => {
   const debounceValue = useDebounce(param, 1000);
 
   useEffect(() => {
-    Axios<Project[]>(`/projects?${qs.stringify(cleanObject(param))}`).then(
-      (res) => setList(res)
-    );
+    Axios<Project[]>(
+      `/projects?${qs.stringify(cleanObject(debounceValue))}`
+    ).then((res) => setList(res));
   }, [debounceValue]);
 
   useMount(() => Axios<User[]>("/users").then((res) => setUsers(res)));
