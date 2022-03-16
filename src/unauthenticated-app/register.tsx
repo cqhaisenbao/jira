@@ -1,20 +1,15 @@
 import React, { FormEvent } from "react";
-import { Axios } from "../../utils";
+import { useAuth } from "../context/auth-context";
 
-const Login = () => {
+const Register = () => {
+  const { user, register } = useAuth();
   const handleSubmit = async (values: FormEvent<HTMLFormElement>) => {
     values.preventDefault();
     const params = {
       username: (values.currentTarget.elements[0] as HTMLInputElement).value,
       password: (values.currentTarget.elements[1] as HTMLInputElement).value,
     };
-    const res = await fetch("http://localhost:3001/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    });
+    const res = await register(params);
     console.log(res);
   };
 
@@ -33,4 +28,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

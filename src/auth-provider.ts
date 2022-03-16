@@ -4,39 +4,45 @@ export const getToken = () => {
   return localStorage.getItem(localStorageKey);
 };
 
-export const handleUserResponse = ({ user }: { user: User }) => {
+export const handleUserResponse = (user: User) => {
   window.localStorage.setItem(localStorageKey, user.token || "");
   return user;
 };
 
-export const login = (data: { username: string; password: string }) => {
-  fetch("http://localhost:3001/login", {
+export const login = async (data: { username: string; password: string }) => {
+  const res = await fetch("http://127.0.0.1:4523/mock/741544/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then(async (res) => {
-    if (res.ok) {
-      return handleUserResponse(await res.json());
-    }
   });
+  if (res.ok) {
+    const { result } = await res.json();
+    return handleUserResponse(result);
+  } else {
+    throw new Error("Login failed");
+  }
 };
 
-export const register = (data: { username: string; password: string }) => {
-  fetch("http://localhost:3001/register", {
+export const register = async (data: {
+  username: string;
+  password: string;
+}) => {
+  const res = await fetch("http://localhost:3001/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then(async (res) => {
-    if (res.ok) {
-      return handleUserResponse(await res.json());
-    }
   });
+  if (res.ok) {
+    return handleUserResponse(await res.json());
+  } else {
+    throw new Error("Register failed");
+  }
 };
 
-export const logout = () => {
+export const logout = async () => {
   window.localStorage.removeItem(localStorageKey);
 };
