@@ -20,3 +20,9 @@ interface SearchParam {
   name: string;
   personId: string;
 }
+
+interface GeneralResponse<T> {
+  message: string;
+  code: number;
+  result: T;
+}

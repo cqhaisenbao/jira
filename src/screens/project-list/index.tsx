@@ -1,11 +1,11 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useState } from "react";
-import { useRequest } from "ahooks";
 import useDebounce from "../../hooks/useDebounce";
-import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
+import { useProjects } from "./hooks/useProjects";
+import { useUsers } from "./hooks/useUsers";
 
 const Container = styled.div`
   padding: 3.2rem;
@@ -16,21 +16,9 @@ const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
-  const client = useHttp();
   const debounceValue = useDebounce(param, 1000);
-  const { data, loading } = useRequest(
-    () => {
-      return client("projects", {
-        data: debounceValue,
-      });
-    },
-    {
-      refreshDeps: [debounceValue],
-    }
-  );
-  const { data: users } = useRequest(() => {
-    return client("users");
-  });
+  const { data, loading } = useProjects(debounceValue);
+  const { users } = useUsers();
 
   return (
     <Container>
@@ -43,7 +31,7 @@ const ProjectListScreen = () => {
       <List
         loading={loading}
         users={users?.result || []}
-        dataSource={data?.result}
+        dataSource={data?.result || []}
       />
     </Container>
   );
