@@ -9,7 +9,7 @@ interface Props {
 
 export const SearchPanel: React.FC<Props> = ({ param, setParam, users }) => {
   return (
-    <Space style={{ marginBottom: "20px" }}>
+    <Space style={{ marginBottom: "2rem" }}>
       <Input
         value={param.name}
         onChange={(e) => setParam({ ...param, name: e.target.value })}

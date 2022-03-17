@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import { useMount } from "ahooks";
 import useDebounce from "../../hooks/useDebounce";
 import { useHttp } from "../../utils/http";
+import styled from "@emotion/styled";
+import { Typography } from "antd";
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
 
 const ProjectListScreen = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -28,10 +34,11 @@ const ProjectListScreen = () => {
   });
 
   return (
-    <div>
+    <Container>
       <SearchPanel param={param} setParam={setParam} users={users} />
+      <Typography.Title level={2}>项目列表</Typography.Title>
       <List users={users} list={list} />
-    </div>
+    </Container>
   );
 };
 

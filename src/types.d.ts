@@ -4,6 +4,7 @@ interface Project {
   personId: string;
   organization: string;
   pin: boolean;
+  created: string;
 }
 
 interface User {
