@@ -5,7 +5,7 @@ import { Button, Form, Input } from "antd";
 const { Item } = Form;
 
 const Register = () => {
-  const { user, register } = useAuth();
+  const { register } = useAuth();
   const handleSubmit = async (values: FormEvent<HTMLFormElement>) => {
     values.preventDefault();
     const params = {
@@ -18,14 +18,14 @@ const Register = () => {
 
   return (
     <Form onFinish={handleSubmit}>
-      <Item name="username" label="用户名" rules={[{ required: true }]}>
-        <Input type="text" />
+      <Item name="username" rules={[{ required: true }]}>
+        <Input type="text" placeholder={"请输入用户名"} />
       </Item>
-      <Item name="password" label="密码" rules={[{ required: true }]}>
-        <Input type="password" />
+      <Item name="password" rules={[{ required: true }]}>
+        <Input placeholder={"请输入密码"} type="password" />
       </Item>
       <Item>
-        <Button type="primary" htmlType="submit">
+        <Button style={{ width: "100%" }} type="primary" htmlType="submit">
           注册
         </Button>
       </Item>
