@@ -1,10 +1,9 @@
-import qs from "qs";
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import { Axios, cleanObject } from "../../utils";
 import { useMount } from "ahooks";
 import useDebounce from "../../hooks/useDebounce";
+import { useHttp } from "../../utils/http";
 
 const ProjectListScreen = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -14,16 +13,19 @@ const ProjectListScreen = () => {
     personId: "",
   });
   const [list, setList] = useState<Project[]>([]);
+  const client = useHttp();
 
   const debounceValue = useDebounce(param, 1000);
 
   useEffect(() => {
-    Axios<Project[]>(
-      `/projects?${qs.stringify(cleanObject(debounceValue))}`
-    ).then((res) => setList(res));
+    client("projects", {
+      data: debounceValue,
+    }).then((res) => setList(res.result));
   }, [debounceValue]);
 
-  useMount(() => Axios<User[]>("/users").then((res) => setUsers(res)));
+  useMount(() => {
+    client("users").then((res) => setUsers(res.result));
+  });
 
   return (
     <div>
