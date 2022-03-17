@@ -1,7 +1,7 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
-import { useEffect, useState } from "react";
-import { useMount } from "ahooks";
+import { useState } from "react";
+import { useRequest } from "ahooks";
 import useDebounce from "../../hooks/useDebounce";
 import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
@@ -12,32 +12,39 @@ const Container = styled.div`
 `;
 
 const ProjectListScreen = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
   const [param, setParam] = useState<SearchParam>({
     name: "",
     personId: "",
   });
-  const [list, setList] = useState<Project[]>([]);
   const client = useHttp();
-
   const debounceValue = useDebounce(param, 1000);
-
-  useEffect(() => {
-    client("projects", {
-      data: debounceValue,
-    }).then((res) => setList(res.result));
-  }, [debounceValue]);
-
-  useMount(() => {
-    client("users").then((res) => setUsers(res.result));
+  const { data, loading } = useRequest(
+    () => {
+      return client("projects", {
+        data: debounceValue,
+      });
+    },
+    {
+      refreshDeps: [debounceValue],
+    }
+  );
+  const { data: users } = useRequest(() => {
+    return client("users");
   });
 
   return (
     <Container>
       <Typography.Title level={2}>项目列表</Typography.Title>
-      <SearchPanel param={param} setParam={setParam} users={users} />
-      <List users={users} list={list} />
+      <SearchPanel
+        param={param}
+        setParam={setParam}
+        users={users?.result || []}
+      />
+      <List
+        loading={loading}
+        users={users?.result || []}
+        dataSource={data?.result}
+      />
     </Container>
   );
 };
