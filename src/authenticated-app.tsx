@@ -15,14 +15,14 @@ const Header = styled(Row)`
 const HeadLeft = styled(Row)``;
 
 const Main = styled.main`
-  height: calc(100vh - 9.2rem);
+  height: calc(100vh - 7rem);
 `;
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
   return (
     <>
-      <Header between={true} marginBottom={2}>
+      <Header between={true}>
         <HeadLeft gap={true}>
           <SoftwareLogo width={"18rem"} color={"reg(38,132,255)"} />
           <h3>项目</h3>

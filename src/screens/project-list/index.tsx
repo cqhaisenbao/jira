@@ -35,8 +35,8 @@ const ProjectListScreen = () => {
 
   return (
     <Container>
-      <SearchPanel param={param} setParam={setParam} users={users} />
       <Typography.Title level={2}>项目列表</Typography.Title>
+      <SearchPanel param={param} setParam={setParam} users={users} />
       <List users={users} list={list} />
     </Container>
   );
