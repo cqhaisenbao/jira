@@ -1,5 +1,8 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
+import { Button, Form, Input } from "antd";
+
+const { Item } = Form;
 
 const Register = () => {
   const { user, register } = useAuth();
@@ -14,17 +17,19 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">用户名</label>
-        <input type="text" id={"username"} />
-      </div>
-      <div>
-        <label htmlFor="password">密码</label>
-        <input type="password" id={"password"} />
-      </div>
-      <button type="submit">注册</button>
-    </form>
+    <Form onFinish={handleSubmit}>
+      <Item name="username" label="用户名" rules={[{ required: true }]}>
+        <Input type="text" />
+      </Item>
+      <Item name="password" label="密码" rules={[{ required: true }]}>
+        <Input type="password" />
+      </Item>
+      <Item>
+        <Button type="primary" htmlType="submit">
+          注册
+        </Button>
+      </Item>
+    </Form>
   );
 };
 

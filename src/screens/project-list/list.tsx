@@ -1,4 +1,6 @@
 import React from "react";
+import { Table } from "antd";
+import { ColumnsType } from "antd/es/table/Table";
 
 interface Props {
   list: Project[];
@@ -6,24 +8,20 @@ interface Props {
 }
 
 export const List: React.FC<Props> = ({ list, users }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>负责人</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((item) => (
-          <tr key={item.id}>
-            <td>{item.name}</td>
-            <td>
-              {users.find((user) => user.id === item.personId)?.name || "未知"}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+  const columns: ColumnsType<Project> = [
+    {
+      dataIndex: "name",
+      title: "名称",
+    },
+    {
+      dataIndex: "personId",
+      title: "负责人",
+      render: (personId: string) => {
+        const user = users.find((user) => user.id === personId);
+        return user ? user.name : "";
+      },
+    },
+  ];
+
+  return <Table pagination={false} columns={columns} dataSource={list} />;
 };

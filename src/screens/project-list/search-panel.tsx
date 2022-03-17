@@ -1,4 +1,5 @@
 import React from "react";
+import { Input, Select, Space } from "antd";
 
 interface Props {
   param: SearchParam;
@@ -8,25 +9,22 @@ interface Props {
 
 export const SearchPanel: React.FC<Props> = ({ param, setParam, users }) => {
   return (
-    <form action="">
-      <div>
-        <input
-          type="text"
-          value={param.name}
-          onChange={(e) => setParam({ ...param, name: e.target.value })}
-        />
-        <select
-          value={param.personId}
-          onChange={(e) => setParam({ ...param, personId: e.target.value })}
-        >
-          <option value="">负责人</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-      </div>
-    </form>
+    <Space style={{ marginBottom: "20px" }}>
+      <Input
+        value={param.name}
+        onChange={(e) => setParam({ ...param, name: e.target.value })}
+      />
+      <Select
+        value={param.personId}
+        onChange={(e) => setParam({ ...param, personId: e })}
+      >
+        <Select.Option value="">负责人</Select.Option>
+        {users.map((user) => (
+          <Select.Option key={user.id} value={user.id}>
+            {user.name}
+          </Select.Option>
+        ))}
+      </Select>
+    </Space>
   );
 };
