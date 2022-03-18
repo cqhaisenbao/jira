@@ -1,8 +1,7 @@
 import ProjectListScreen from "./screens/project-list";
 import styled from "@emotion/styled";
 import PageHeader from "./components/Header";
-import { Routes, Route } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router";
 import ProjectScreen from "./screens/project";
 
 const Main = styled.main`
@@ -14,12 +13,13 @@ export const AuthenticatedApp = () => {
     <>
       <PageHeader />
       <Main>
-        <Router>
-          <Routes>
-            <Route path="/projects" element={<ProjectListScreen />} />
-            <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
-          </Routes>
-        </Router>
+        {/*<Router>*/}
+        <Routes>
+          <Route path="/projects" element={<ProjectListScreen />} />
+          <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
+          <Route path="/" element={<Navigate to="/projects" />} />
+        </Routes>
+        {/*</Router>*/}
       </Main>
     </>
   );

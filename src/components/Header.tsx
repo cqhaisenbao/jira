@@ -3,6 +3,7 @@ import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./lib";
 import { useAuth } from "../context/auth-context";
+import { useNavigate } from "react-router";
 
 const Header = styled(Row)`
   padding: 3.2rem;
@@ -15,11 +16,16 @@ const HeadLeft = styled(Row)``;
 
 const PageHeader = () => {
   const { logout, user } = useAuth();
-
+  const push = useNavigate();
   return (
     <Header between={true}>
       <HeadLeft gap={true}>
-        <SoftwareLogo width={"18rem"} color={"reg(38,132,255)"} />
+        <SoftwareLogo
+          onClick={() => push("/")}
+          cursor={"pointer"}
+          width={"18rem"}
+          color={"reg(38,132,255)"}
+        />
         <h3>项目</h3>
         <h3>用户</h3>
       </HeadLeft>
