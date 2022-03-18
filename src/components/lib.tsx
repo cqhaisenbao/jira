@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Typography } from "antd";
 
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -22,3 +23,19 @@ export const Row = styled.div<{
         : undefined};
   }
 `;
+
+export const FullPage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+`;
+
+export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
+  return (
+    <FullPage>
+      <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+    </FullPage>
+  );
+};
