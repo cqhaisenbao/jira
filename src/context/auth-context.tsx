@@ -1,7 +1,8 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "../auth-provider";
 import { http } from "../utils/http";
-import { useMount } from "ahooks";
+import { useRequest } from "ahooks";
+import FullScreenLoading from "../components/FullScreenLoading";
 
 interface AuthForm {
   username: string;
@@ -32,17 +33,26 @@ AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const { loading } = useRequest(bootstrapUser, {
+    onSuccess: (data) => {
+      setUser(data);
+    },
+  });
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
-  useMount(() => bootstrapUser().then(setUser));
-
   return (
-    <AuthContext.Provider
-      children={children}
-      value={{ user, login, logout, register }}
-    />
+    <>
+      {loading ? (
+        <FullScreenLoading />
+      ) : (
+        <AuthContext.Provider
+          children={children}
+          value={{ user, login, logout, register }}
+        />
+      )}
+    </>
   );
 };
 
