@@ -1,14 +1,14 @@
 interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
-  organization: string;
+  personId: number;
+  organization: number;
   pin: boolean;
   created: string;
 }
 
 interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   title: string;
@@ -16,10 +16,10 @@ interface User {
   token: string;
 }
 
-interface SearchParam {
-  name: string;
-  personId: string;
-}
+// interface SearchParam {
+//   name: string;
+//   personId: string;
+// }
 
 interface GeneralResponse<T> {
   message: string;
