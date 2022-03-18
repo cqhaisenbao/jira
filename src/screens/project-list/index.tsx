@@ -1,6 +1,5 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
-import { useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
@@ -13,11 +12,7 @@ const Container = styled.div`
 `;
 
 const ProjectListScreen = () => {
-  const [, setParam] = useState<SearchParam>({
-    name: "",
-    personId: "",
-  });
-  const [param] = useUrlQueryParam(["name", "personId"]);
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debounceValue = useDebounce(param, 1000);
   const { data, loading } = useProjects(debounceValue);
   const { users } = useUsers();
