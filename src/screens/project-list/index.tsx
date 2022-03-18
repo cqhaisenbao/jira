@@ -39,6 +39,4 @@ const ProjectListScreen = () => {
   );
 };
 
-ProjectListScreen.whyDidYouRender = true;
-
 export default ProjectListScreen;
