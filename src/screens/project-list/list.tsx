@@ -11,7 +11,9 @@ export const List: React.FC<Props> = ({ users, ...restProps }) => {
   const columns: ColumnsType<Project> = [
     {
       title: "名称",
-      render: (text, record) => <Link to={record.id}>{record.name}</Link>,
+      render: (text, record) => (
+        <Link to={record.id.toString()}>{record.name}</Link>
+      ),
     },
     {
       dataIndex: "organization",
@@ -20,7 +22,7 @@ export const List: React.FC<Props> = ({ users, ...restProps }) => {
     {
       dataIndex: "personId",
       title: "负责人",
-      render: (personId: string) => {
+      render: (personId: number) => {
         const user = users?.find((user) => user.id === personId);
         return user ? user.name : "";
       },
