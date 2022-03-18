@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, TableProps } from "antd";
 import { ColumnsType } from "antd/es/table/Table";
+import { Link } from "react-router-dom";
 
 interface Props extends TableProps<Project> {
   users: User[];
@@ -9,8 +10,8 @@ interface Props extends TableProps<Project> {
 export const List: React.FC<Props> = ({ users, ...restProps }) => {
   const columns: ColumnsType<Project> = [
     {
-      dataIndex: "name",
       title: "名称",
+      render: (text, record) => <Link to={record.id}>{record.name}</Link>,
     },
     {
       dataIndex: "organization",
