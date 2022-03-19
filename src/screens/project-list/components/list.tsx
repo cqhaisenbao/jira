@@ -5,19 +5,17 @@ import { Link } from "react-router-dom";
 import Pin from "../../../components/Pin";
 import { useEditProject } from "../hooks/useProjects";
 import { ProjectContext } from "../projectContext";
+import { projectListActions } from "../projectList.slice";
+import { useDispatch } from "react-redux";
 
 interface Props extends TableProps<Project> {
   refresh: (params: Partial<Project>) => void;
-  projectButton: JSX.Element;
 }
 
-export const List: React.FC<Props> = ({
-  refresh,
-  projectButton,
-  ...restProps
-}) => {
+export const List: React.FC<Props> = ({ refresh, ...restProps }) => {
   const { editProject } = useEditProject();
   const ctx = useContext(ProjectContext);
+  const dispatch = useDispatch();
 
   const pinProject = (id: number) => (pin: boolean) =>
     editProject({ id, pin }).then(refresh);
@@ -52,11 +50,23 @@ export const List: React.FC<Props> = ({
       title: "创建时间",
     },
     {
-      render: (text, record) => (
+      render: () => (
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key={"edit"}>{projectButton}</Menu.Item>
+              <Menu.Item key={"edit"}>
+                {
+                  <Button
+                    style={{ padding: 0 }}
+                    type={"link"}
+                    onClick={() =>
+                      dispatch(projectListActions.openProjectModal())
+                    }
+                  >
+                    创建项目
+                  </Button>
+                }
+              </Menu.Item>
             </Menu>
           }
         >

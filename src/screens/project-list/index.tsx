@@ -2,21 +2,19 @@ import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
-import { Space, Typography } from "antd";
+import { Button, Space, Typography } from "antd";
 import { useGetProjects } from "./hooks/useProjects";
 import { useProjectsSearchParams } from "./hooks/useProjectsSearchParams";
 import ProjectProvider from "./projectContext";
+import { projectListActions } from "./projectList.slice";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   padding: 3.2rem;
 `;
 
-interface Props {
-  projectButton: JSX.Element;
-}
-
-const ProjectListScreen = (props: Props) => {
-  const { projectButton } = props;
+const ProjectListScreen = () => {
+  const dispatch = useDispatch();
   const [param, setParam] = useProjectsSearchParams();
   const {
     data,
@@ -37,11 +35,16 @@ const ProjectListScreen = (props: Props) => {
           <Typography.Title level={2} style={{ marginBottom: 0 }}>
             项目列表
           </Typography.Title>
-          {projectButton}
+          <Button
+            style={{ padding: 0 }}
+            type={"link"}
+            onClick={() => dispatch(projectListActions.openProjectModal())}
+          >
+            创建项目
+          </Button>
         </Space>
         <SearchPanel param={param} setParam={setParam} />
         <List
-          projectButton={projectButton}
           refresh={refreshList}
           loading={loading}
           dataSource={data?.result || []}

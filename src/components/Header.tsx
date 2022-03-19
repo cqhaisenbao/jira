@@ -1,7 +1,7 @@
 import { ReactComponent as SoftwareLogo } from "../assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
-import { Row } from "./lib";
+import { ButtonNoPadding, Row } from "./lib";
 import { useAuth } from "../context/auth-context";
 import { useNavigate } from "react-router";
 import ProjectPopover from "./ProjectPopover";
@@ -15,11 +15,7 @@ const Header = styled(Row)`
 
 const HeadLeft = styled(Row)``;
 
-interface Props {
-  projectButton: JSX.Element;
-}
-
-const PageHeader = (props: Props) => {
+const PageHeader = () => {
   const { logout, user } = useAuth();
   const push = useNavigate();
   return (
@@ -31,16 +27,16 @@ const PageHeader = (props: Props) => {
           width={"18rem"}
           color={"reg(38,132,255)"}
         />
-        <ProjectPopover {...props} />
-        <span>用户</span>
+        <ProjectPopover />
+        <ButtonNoPadding type={"link"}>用户</ButtonNoPadding>
       </HeadLeft>
       <Dropdown
         overlay={
           <Menu>
             <Menu.Item key={"logout"}>
-              <Button type={"link"} onClick={logout}>
+              <ButtonNoPadding type={"link"} onClick={logout}>
                 退出
-              </Button>
+              </ButtonNoPadding>
             </Menu.Item>
           </Menu>
         }
