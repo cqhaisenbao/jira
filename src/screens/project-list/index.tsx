@@ -1,12 +1,11 @@
-import { SearchPanel } from "./search-panel";
-import { List } from "./list";
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
 import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useGetProjects } from "./hooks/useProjects";
 import { useProjectsSearchParams } from "./hooks/useProjectsSearchParams";
-import ProjectProvider, { ProjectContext } from "./projectContext";
-import { useContext } from "react";
+import ProjectProvider from "./projectContext";
 
 const Container = styled.div`
   padding: 3.2rem;
@@ -19,7 +18,6 @@ const ProjectListScreen = () => {
     loading,
     run: refreshList,
   } = useGetProjects(useDebounce(param, 1000));
-  const ctx = useContext(ProjectContext);
 
   return (
     <ProjectProvider>
@@ -29,7 +27,6 @@ const ProjectListScreen = () => {
         <List
           refresh={refreshList}
           loading={loading}
-          users={ctx?.users || []}
           dataSource={data?.result || []}
         />
       </Container>

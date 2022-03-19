@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Space } from "antd";
-import { UserSelect } from "../../components/userSelect";
+import { UserSelect } from "../../../components/userSelect";
 
 interface Props {
   param: Partial<Pick<Project, "name" | "personId">>;

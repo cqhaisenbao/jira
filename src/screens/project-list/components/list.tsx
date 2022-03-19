@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Table, TableProps } from "antd";
 import { ColumnsType } from "antd/es/table/Table";
 import { Link } from "react-router-dom";
-import Pin from "../../components/Pin";
-import { useEditProject } from "./hooks/useProjects";
+import Pin from "../../../components/Pin";
+import { useEditProject } from "../hooks/useProjects";
+import { ProjectContext } from "../projectContext";
 
 interface Props extends TableProps<Project> {
-  users: User[] | [];
   refresh: (params: Partial<Project>) => void;
 }
 
-export const List: React.FC<Props> = ({ users, refresh, ...restProps }) => {
+export const List: React.FC<Props> = ({ refresh, ...restProps }) => {
   const { editProject } = useEditProject();
+  const ctx = useContext(ProjectContext);
 
   const pinProject = (id: number) => (pin: boolean) =>
     editProject({ id, pin }).then(refresh);
@@ -37,7 +38,7 @@ export const List: React.FC<Props> = ({ users, refresh, ...restProps }) => {
       dataIndex: "personId",
       title: "负责人",
       render: (personId: number) => {
-        const user = users?.find((user) => user.id === personId);
+        const user = ctx?.users?.find((user) => user.id === personId);
         return user ? user.name : "";
       },
     },
