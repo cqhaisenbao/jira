@@ -3,7 +3,7 @@ import { List } from "./list";
 import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
-import { useProjects } from "./hooks/useProjects";
+import { useGetProjects } from "./hooks/useProjects";
 import { useUsers } from "./hooks/useUsers";
 import { useProjectsSearchParams } from "./hooks/useProjectsSearchParams";
 
@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const ProjectListScreen = () => {
   const [param, setParam] = useProjectsSearchParams();
-  const { data, loading } = useProjects(useDebounce(param, 1000));
+  const { data, loading } = useGetProjects(useDebounce(param, 1000));
   const { users } = useUsers();
 
   return (
