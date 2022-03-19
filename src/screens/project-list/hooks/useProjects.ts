@@ -1,7 +1,7 @@
 import { useHttp } from "../../../utils/http";
 import { useRequest } from "ahooks";
 
-export const useGetProjects = (param: Partial<Project>) => {
+export const useGetProjects = (param?: Partial<Project>) => {
   const client = useHttp();
   const { data, loading, run } = useRequest<
     GeneralResponse<Project[]>,

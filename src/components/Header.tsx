@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Row } from "./lib";
 import { useAuth } from "../context/auth-context";
 import { useNavigate } from "react-router";
+import ProjectPopover from "./ProjectPopover";
 
 const Header = styled(Row)`
   padding: 3.2rem;
@@ -14,7 +15,12 @@ const Header = styled(Row)`
 
 const HeadLeft = styled(Row)``;
 
-const PageHeader = () => {
+interface Props {
+  openProjectModal: () => void;
+}
+
+const PageHeader = (props: Props) => {
+  const { openProjectModal } = props;
   const { logout, user } = useAuth();
   const push = useNavigate();
   return (
@@ -26,8 +32,8 @@ const PageHeader = () => {
           width={"18rem"}
           color={"reg(38,132,255)"}
         />
-        <h3>项目</h3>
-        <h3>用户</h3>
+        <ProjectPopover openProjectModal={openProjectModal} />
+        <span>用户</span>
       </HeadLeft>
       <Dropdown
         overlay={

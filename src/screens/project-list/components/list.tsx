@@ -1,16 +1,22 @@
 import React, { useContext } from "react";
-import { Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import { ColumnsType } from "antd/es/table/Table";
 import { Link } from "react-router-dom";
 import Pin from "../../../components/Pin";
 import { useEditProject } from "../hooks/useProjects";
 import { ProjectContext } from "../projectContext";
+import { ButtonNoPadding } from "../../../components/lib";
 
 interface Props extends TableProps<Project> {
   refresh: (params: Partial<Project>) => void;
+  openProjectModal: () => void;
 }
 
-export const List: React.FC<Props> = ({ refresh, ...restProps }) => {
+export const List: React.FC<Props> = ({
+  refresh,
+  openProjectModal,
+  ...restProps
+}) => {
   const { editProject } = useEditProject();
   const ctx = useContext(ProjectContext);
 
@@ -45,6 +51,23 @@ export const List: React.FC<Props> = ({ refresh, ...restProps }) => {
     {
       dataIndex: "created",
       title: "创建时间",
+    },
+    {
+      render: (text, record) => (
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key={"edit"}>
+                <ButtonNoPadding type={"link"} onClick={openProjectModal}>
+                  编辑
+                </ButtonNoPadding>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type={"link"}>...</Button>
+        </Dropdown>
+      ),
     },
   ];
 
