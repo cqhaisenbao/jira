@@ -2,13 +2,25 @@ import React from "react";
 import { Table, TableProps } from "antd";
 import { ColumnsType } from "antd/es/table/Table";
 import { Link } from "react-router-dom";
+import Pin from "../../components/Pin";
+import { useEditProject } from "./hooks/useProjects";
 
 interface Props extends TableProps<Project> {
   users: User[];
 }
 
 export const List: React.FC<Props> = ({ users, ...restProps }) => {
+  const { editProject } = useEditProject();
+
+  const pinProject = (id: number) => (pin: boolean) => editProject({ id, pin });
+
   const columns: ColumnsType<Project> = [
+    {
+      title: <Pin checked={true} disabled={true} />,
+      render: (text, record) => (
+        <Pin checked={record.pin} onCheckedChange={pinProject(record.id)} />
+      ),
+    },
     {
       title: "名称",
       render: (text, record) => (
