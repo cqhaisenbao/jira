@@ -8,6 +8,6 @@ export const useUsers = () => {
   });
 
   return {
-    users,
+    users: users?.result || [],
   };
 };

@@ -3,7 +3,10 @@ import { useRequest } from "ahooks";
 
 export const useGetProjects = (param: Partial<Project>) => {
   const client = useHttp();
-  const { data, loading } = useRequest<GeneralResponse<Project[]>, any>(
+  const { data, loading, run } = useRequest<
+    GeneralResponse<Project[]>,
+    Partial<Project> & any[]
+  >(
     () => {
       return client("projects", {
         data: param,
@@ -17,10 +20,11 @@ export const useGetProjects = (param: Partial<Project>) => {
   return {
     data,
     loading,
+    run,
   };
 };
 
-export const useEditProject = () => {
+export const useEditProject = (run: (params: Partial<Project>) => void) => {
   const client = useHttp();
   const { runAsync: editProject } = useRequest(
     (params: Partial<Project>) => {
@@ -31,6 +35,7 @@ export const useEditProject = () => {
     },
     {
       manual: true,
+      onSuccess: run,
     }
   );
 

@@ -6,11 +6,12 @@ import Pin from "../../components/Pin";
 import { useEditProject } from "./hooks/useProjects";
 
 interface Props extends TableProps<Project> {
-  users: User[];
+  users: User[] | [];
+  refresh: (params: Partial<Project>) => void;
 }
 
-export const List: React.FC<Props> = ({ users, ...restProps }) => {
-  const { editProject } = useEditProject();
+export const List: React.FC<Props> = ({ users, refresh, ...restProps }) => {
+  const { editProject } = useEditProject(refresh);
 
   const pinProject = (id: number) => (pin: boolean) => editProject({ id, pin });
 
