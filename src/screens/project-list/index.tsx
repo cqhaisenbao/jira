@@ -2,7 +2,7 @@ import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
-import { Button, Space, Typography } from "antd";
+import { Space, Typography } from "antd";
 import { useGetProjects } from "./hooks/useProjects";
 import { useProjectsSearchParams } from "./hooks/useProjectsSearchParams";
 import ProjectProvider from "./projectContext";
@@ -12,11 +12,11 @@ const Container = styled.div`
 `;
 
 interface Props {
-  openProjectModal: () => void;
+  projectButton: JSX.Element;
 }
 
 const ProjectListScreen = (props: Props) => {
-  const { openProjectModal } = props;
+  const { projectButton } = props;
   const [param, setParam] = useProjectsSearchParams();
   const {
     data,
@@ -37,11 +37,11 @@ const ProjectListScreen = (props: Props) => {
           <Typography.Title level={2} style={{ marginBottom: 0 }}>
             项目列表
           </Typography.Title>
-          <Button onClick={openProjectModal}>创建项目</Button>
+          {projectButton}
         </Space>
         <SearchPanel param={param} setParam={setParam} />
         <List
-          openProjectModal={openProjectModal}
+          projectButton={projectButton}
           refresh={refreshList}
           loading={loading}
           dataSource={data?.result || []}

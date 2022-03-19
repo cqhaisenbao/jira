@@ -5,16 +5,15 @@ import { Link } from "react-router-dom";
 import Pin from "../../../components/Pin";
 import { useEditProject } from "../hooks/useProjects";
 import { ProjectContext } from "../projectContext";
-import { ButtonNoPadding } from "../../../components/lib";
 
 interface Props extends TableProps<Project> {
   refresh: (params: Partial<Project>) => void;
-  openProjectModal: () => void;
+  projectButton: JSX.Element;
 }
 
 export const List: React.FC<Props> = ({
   refresh,
-  openProjectModal,
+  projectButton,
   ...restProps
 }) => {
   const { editProject } = useEditProject();
@@ -57,11 +56,7 @@ export const List: React.FC<Props> = ({
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key={"edit"}>
-                <ButtonNoPadding type={"link"} onClick={openProjectModal}>
-                  编辑
-                </ButtonNoPadding>
-              </Menu.Item>
+              <Menu.Item key={"edit"}>{projectButton}</Menu.Item>
             </Menu>
           }
         >

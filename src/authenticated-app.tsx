@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from "react-router";
 import ProjectScreen from "./screens/project";
 import ProjectModal from "./screens/project-list/components/ProjectModal";
 import { useState } from "react";
+import { Button } from "antd";
 
 const Main = styled.main`
   height: calc(100vh - 7rem);
@@ -12,18 +13,25 @@ const Main = styled.main`
 
 export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
+
+  const projectButton = (
+    <Button
+      style={{ padding: 0 }}
+      type={"link"}
+      onClick={() => setProjectModalOpen(true)}
+    >
+      创建项目
+    </Button>
+  );
+
   return (
     <>
-      <PageHeader openProjectModal={() => setProjectModalOpen(true)} />
+      <PageHeader projectButton={projectButton} />
       <Main>
         <Routes>
           <Route
             path="/projects"
-            element={
-              <ProjectListScreen
-                openProjectModal={() => setProjectModalOpen(true)}
-              />
-            }
+            element={<ProjectListScreen projectButton={projectButton} />}
           />
           <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
           <Route path="/" element={<Navigate to="/projects" />} />
