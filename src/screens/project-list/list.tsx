@@ -11,9 +11,10 @@ interface Props extends TableProps<Project> {
 }
 
 export const List: React.FC<Props> = ({ users, refresh, ...restProps }) => {
-  const { editProject } = useEditProject(refresh);
+  const { editProject } = useEditProject();
 
-  const pinProject = (id: number) => (pin: boolean) => editProject({ id, pin });
+  const pinProject = (id: number) => (pin: boolean) =>
+    editProject({ id, pin }).then(refresh);
 
   const columns: ColumnsType<Project> = [
     {

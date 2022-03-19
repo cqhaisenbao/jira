@@ -24,7 +24,7 @@ export const useGetProjects = (param: Partial<Project>) => {
   };
 };
 
-export const useEditProject = (run: (params: Partial<Project>) => void) => {
+export const useEditProject = () => {
   const client = useHttp();
   const { runAsync: editProject } = useRequest(
     (params: Partial<Project>) => {
@@ -35,7 +35,6 @@ export const useEditProject = (run: (params: Partial<Project>) => void) => {
     },
     {
       manual: true,
-      onSuccess: run,
     }
   );
 
