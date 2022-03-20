@@ -15,11 +15,7 @@ const Header = styled(Row)`
 
 const HeadLeft = styled(Row)``;
 
-interface Props {
-  projectButton: JSX.Element;
-}
-
-const PageHeader = (props: Props) => {
+const PageHeader = () => {
   const { logout, user } = useAuth();
   const push = useNavigate();
   return (
@@ -31,7 +27,7 @@ const PageHeader = (props: Props) => {
           width={"18rem"}
           color={"reg(38,132,255)"}
         />
-        <ProjectPopover {...props} />
+        <ProjectPopover />
         <span>用户</span>
       </HeadLeft>
       <Dropdown

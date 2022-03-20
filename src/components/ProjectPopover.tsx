@@ -1,13 +1,11 @@
 import { Divider, List, Popover, Typography } from "antd";
 import { useGetProjects } from "../screens/project-list/hooks/useProjects";
+import { ButtonNoPadding } from "./lib";
+import { useProjectModal } from "../screens/project-list/hooks/useProjectsSearchParams";
 
-interface Props {
-  projectButton: JSX.Element;
-}
-
-const ProjectPopover = (props: Props) => {
-  const { projectButton } = props;
-  const { data: projects, loading } = useGetProjects();
+const ProjectPopover = () => {
+  const { open } = useProjectModal();
+  const { data: projects } = useGetProjects();
   const pinnedProjects = projects?.result?.filter((project) => project.pin);
   const content = (
     <div style={{ minWidth: "30rem" }}>
@@ -20,7 +18,9 @@ const ProjectPopover = (props: Props) => {
         ))}
       </List>
       <Divider style={{ paddingTop: 0, marginTop: 0 }} />
-      {projectButton}
+      <ButtonNoPadding onClick={open} type={"link"}>
+        创建项目
+      </ButtonNoPadding>
     </div>
   );
   return (

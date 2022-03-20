@@ -4,19 +4,19 @@ import useDebounce from "../../hooks/useDebounce";
 import styled from "@emotion/styled";
 import { Space, Typography } from "antd";
 import { useGetProjects } from "./hooks/useProjects";
-import { useProjectsSearchParams } from "./hooks/useProjectsSearchParams";
+import {
+  useProjectModal,
+  useProjectsSearchParams,
+} from "./hooks/useProjectsSearchParams";
 import ProjectProvider from "./projectContext";
+import { ButtonNoPadding } from "../../components/lib";
 
 const Container = styled.div`
   padding: 3.2rem;
 `;
 
-interface Props {
-  projectButton: JSX.Element;
-}
-
-const ProjectListScreen = (props: Props) => {
-  const { projectButton } = props;
+const ProjectListScreen = () => {
+  const { open } = useProjectModal();
   const [param, setParam] = useProjectsSearchParams();
   const {
     data,
@@ -37,11 +37,12 @@ const ProjectListScreen = (props: Props) => {
           <Typography.Title level={2} style={{ marginBottom: 0 }}>
             项目列表
           </Typography.Title>
-          {projectButton}
+          <ButtonNoPadding onClick={open} type={"link"}>
+            创建项目
+          </ButtonNoPadding>
         </Space>
         <SearchPanel param={param} setParam={setParam} />
         <List
-          projectButton={projectButton}
           refresh={refreshList}
           loading={loading}
           dataSource={data?.result || []}
